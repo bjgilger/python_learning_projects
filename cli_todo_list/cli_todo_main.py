@@ -22,21 +22,29 @@ while True:
             file = open("tasks.txt", "w")
             file.writelines(todos)
             file.close()
+
         case "show":
             file = open("tasks.txt", "r")
             todos = file.readlines()
             file.close()
+
             for index, item in enumerate(todos):
+                item = item.strip("\n")
                 print(f"{index + 1}: {item.title()}")
+
+            # new_todos = [item.strip("\n") for item in todos
+
         case "edit":
             number = int(input("Enter the number of the task item to edit: "))
             number = number - 1
             new_todo = input("Enter the new task: ")
             todos[number] = new_todo
+
         case "complete":
             number = int(input("Enter the number of the task item completed: "))
             number = number - 1
             todos.pop(number)
+
         case "exit":
             break
 
