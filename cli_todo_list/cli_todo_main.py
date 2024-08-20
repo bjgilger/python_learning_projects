@@ -11,19 +11,15 @@ while True:
 
     if "add" in user_action:
         todo = user_action[4:]
-
         with open("tasks.txt", "r") as file:
             todos = file.readlines()
-
         todos.append(todo)
-
         with open("tasks.txt", "w") as file:
             file.writelines(todos)
 
     elif "show" in user_action:
         with open("tasks.txt", "r") as file:
             todos = file.readlines()
-
         for index, item in enumerate(todos):
             item = item.strip("\n")
             print(f"{index + 1}: {item.title()}")
@@ -31,30 +27,23 @@ while True:
     elif "edit" in user_action:
         number = int(user_action[5:])
         number = number - 1
-
         with open("tasks.txt", "r") as file:
             todos = file.readlines()
-
         new_todo = input("Enter the new task: ")
         todos[number] = new_todo + '\n'
-
         with open("tasks.txt", "w") as file:
             file.writelines(todos)
 
     elif "complete" in user_action:
         number = int(user_action[9:])
-
         with open("tasks.txt", "r") as file:
             todos = file.readlines()
             index = number - 1
-
         task_to_remove = todos[index].strip('\n')
         number = number - 1
         todos.pop(index)
-
         with open("tasks.txt", "w") as file:
             file.writelines(todos)
-
         message = f"Task {task_to_remove} completed."
         print(message)
 
