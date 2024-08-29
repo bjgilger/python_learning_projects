@@ -4,6 +4,10 @@ Author:  John Gilger
 This is a simple CLI application for creating task lists.
 """
 import functions
+import time
+
+now = time.strftime("%b %d, %Y %H:%M:%S")
+print("It is now", now)
 
 
 while True:
