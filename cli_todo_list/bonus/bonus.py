@@ -61,21 +61,35 @@
 # else:
 #     print("Password is weak")
 
-length = float(input("Enter length: "))
-width = float(input("Enter width: "))
+# length = float(input("Enter length: "))
+# width = float(input("Enter width: "))
+#
+# perimeter = (length + width) * 2
+# area = length * width
+#
+# print("Perimeter is", perimeter)
+# print("Area is", area)
+#
+# if perimeter < 14 and area < 8:
+#     print("OK")
+# else:
+#     print("NOT OK")
 
-perimeter = (length + width) * 2
-area = length * width
+# try:
+#     waiting_list = ["john", "marry"]
+#     name = input("Enter name: ")
+#
+#     number = waiting_list.index(name)
+#     print(f"{name}'s turn is {number}")
+# except ValueError:
+#     print(f"{name} is not on the waiting list")
 
-print("Perimeter is", perimeter)
-print("Area is", area)
-
-if perimeter < 14 and area < 8:
-    print("OK")
-else:
-    print("NOT OK")
+def calculate_time(h, g=9.80665):
+    t = (2 * h / g) ** 0.5
+    return t
 
 
-
+time = calculate_time(100)
+print(time)
 
 
