@@ -1,34 +1,54 @@
-"""
-Title: GUI Task List
-Author:  John Gilger
-This is a simple GUI application for creating task lists.
-"""
+import functions as fn
+import PySimpleGUI as sg  # Corrected import
 
-import functions
-import FreeSimpleGUI as sg
-
-label = sg.Text("Add a task")
-input_box = sg.InputText(tooltip="Enter a task", key="TASK")
+label = sg.Text("Enter a task")
+input_box = sg.InputText(tooltip="Enter task", key='task')
 add_button = sg.Button("Add")
+list_box = sg.Listbox(values=fn.get_todos(), key='tasks',
+                      enable_events=True, size=[45, 10])
+edit_button = sg.Button('Edit')
 
 window = sg.Window('A Simple Task List',
-                   layout=[[label], [input_box, add_button]],
-                   font=("Helvetica", 20)
-                   )
+                   layout=[[label],
+                           [input_box, add_button],
+                           [list_box, edit_button]],
+                   font=('Noto Sans', 16))
 
 while True:
     event, values = window.read()
+    if event == sg.WIN_CLOSED:
+        break
     print(event)
     print(values)
-    match event:
-        case "Add":
-            todos = functions.get_todos()
-            new_task = values["TASK"] + '\n'
-            todos.append(new_task)
-            functions.write_todos(todos)
 
-        case sg.WIN_CLOSED:
+    match event:
+        case 'Add':
+            tasks = fn.get_todos()
+            new_task = values['task'] + '\n'
+            tasks.append(new_task)
+            fn.write_todos(tasks)
+            window['tasks'].update(values=tasks)
+
+        case 'Edit':
+            try:
+                task_to_edit = values['tasks'][0]
+                new_task = values['task']
+
+                tasks = fn.get_todos()
+                index = tasks.index(task_to_edit)
+                tasks[index] = new_task
+                fn.write_todos(tasks)
+                window['tasks'].update(values=tasks)
+            except IndexError:
+                sg.popup("Please select an item to edit.", font=('Noto Sans', 18))
+
+        case 'Exit':
             break
 
+        case 'tasks':
+            window['task'].update(value=values['tasks'][0])
+
+        case sg.WINDOW_CLOSED:
+            break
 
 window.close()
