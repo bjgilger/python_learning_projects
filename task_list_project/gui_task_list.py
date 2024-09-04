@@ -7,11 +7,14 @@ add_button = sg.Button("Add")
 list_box = sg.Listbox(values=fn.get_todos(), key='tasks',
                       enable_events=True, size=[45, 10])
 edit_button = sg.Button('Edit')
+complete_button = sg.Button('Complete')
+exit_button = sg.Button('Exit')
 
 window = sg.Window('A Simple Task List',
                    layout=[[label],
                            [input_box, add_button],
-                           [list_box, edit_button]],
+                           [list_box, edit_button, complete_button],
+                           [exit_button]],
                    font=('Noto Sans', 16))
 
 while True:
@@ -41,6 +44,14 @@ while True:
                 window['tasks'].update(values=tasks)
             except IndexError:
                 sg.popup("Please select an item to edit.", font=('Noto Sans', 18))
+
+        case 'Complete':
+            task_to_complete = values['tasks'][0]
+            tasks = fn.get_todos()
+            tasks.remove(task_to_complete)
+            fn.write_todos(tasks)
+            window['tasks'].update(values=tasks)
+            window['task'].update(value='')
 
         case 'Exit':
             break
